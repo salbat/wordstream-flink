@@ -1,4 +1,5 @@
 import org.apache.flink.api.common.functions.FilterFunction;
+import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 
@@ -11,13 +12,21 @@ public class FilterSettings {
         StreamExecutionEnvironment env =
                 StreamExecutionEnvironment.getExecutionEnvironment();
 
-        DataStream<String> dataStream = env
+        DataStream<Long> dataStream = env
                 .socketTextStream("localhost", 9999)
-                .filter(new Filter());
+                .filter(new Filter())
+                .map(new RoundDouble());
 
         dataStream.print();
 
         env.execute("FilterSettings Strings");
+
+    }
+
+    public static class RoundDouble implements MapFunction<String, Long> {
+        public Long map(String input) throws Exception {
+            return Math.round(Double.parseDouble(input.trim()));
+        }
 
     }
 
