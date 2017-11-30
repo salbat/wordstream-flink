@@ -12,4 +12,8 @@ In Linux/Mac OS, this command will be:
 nc -l 9999
 ```
 
-The code can be run directly from within the Intellij IDEA IDE.
+The code can be run directly from within the Intellij IDEA IDE. 
+
+Flink examples:
+* FilterSettings: Basic streaming by filtering `double` input only. Other types of input will be ignored.
+* WaterMarkEventSettings: Creating a sum 10-second window every 5 seconds.
